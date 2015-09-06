@@ -1,0 +1,26 @@
+<?php
+/**
+ * Implements hook_install().
+ */
+function kaya_recommend_install() {
+  watchdog('recommend', 'hook_install');
+  variable_set('kaya_recommend_extend_db', [
+    'KAYA_default' => [
+      'database' => 'moodle',
+      'username' => 'root',
+      'password' => '',
+      'host' => 'localhost',
+      'port' => 3306,
+      'driver' => 'mysql',
+      'prefix' => 'mdl_',
+    ]
+  ]);
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function kaya_recommend_uninstall() {
+  db_drop_table('recommend');
+  variable_del('kaya_recommend_extend_db');
+}
