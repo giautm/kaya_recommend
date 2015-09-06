@@ -3,7 +3,6 @@
  * Implements hook_install().
  */
 function kaya_recommend_install() {
-  watchdog('recommend', 'hook_install');
   variable_set('kaya_recommend_extend_db', [
     'KAYA_default' => [
       'database' => 'moodle',
@@ -15,6 +14,86 @@ function kaya_recommend_install() {
       'prefix' => 'mdl_',
     ]
   ]);
+}
+
+/**
+ * Implements hook_schema().
+ */
+function kaya_recommend_schema() {
+  // TODO: ??i tên table thành kaya_recommend
+  $schema['recommend'] = [
+    'description' => t('L?u thông tin v? các recommend ?ã ???c t?o.'),
+    'fields' => [
+      'entity_id' => [
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'description' => t("Primary key: A unique ID for each recommend."),
+      ],
+      'user_id' => [
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'default' => 0
+      ],
+      'user_email' => [
+        'type' => 'varchar',
+        'length' => 256,
+        'not null' => FALSE,
+      ],
+      'recv_id' => [
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'default' => 0
+      ],
+      'recv_email' => [
+        'type' => 'varchar',
+        'length' => 256,
+        'not null' => FALSE,
+      ],
+      'created' => [
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => FALSE,
+        'description' => 'Created timestamp',
+      ],
+      'changed' => [
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => FALSE,
+        'description' => 'Changed timestamp',
+      ],
+      'link' => [
+        'type' => 'varchar',
+        'length' => 1024,
+        'not null' => TRUE,
+        'description' => t('Liên k?t c?n chuy?n h??ng ??n.'),
+      ],
+      'site' => [
+        'type' => 'varchar',
+        'length' => 1024,
+        'not null' => TRUE,
+        'description' => t("Site mà liên k?t ???c t?o."),
+      ],
+      'sync' => [
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'default' => 0
+      ],
+      'deleted' => [
+        'type' => 'int',
+        'size' => 'tiny',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'default' => 0
+      ],
+    ],
+    'primary key' => ['entity_id'],
+  ];
+
+  return $schema;
 }
 
 /**

@@ -3,5 +3,14 @@ description = Ch?c n?ng recommend c?a site Kaya.vn
 core = 7.x
 package = KAYA - CORE
 
+; Blocks
+files[] = kaya_recommend.blocks.inc
+
+; Entity controllers
+files[] = includes/kaya_recommend.recommend_controller.inc
+
+; Entity classes.
+files[] = includes/kaya_recommend.recommend.inc
+
 dependencies[] = elysia_cron
 dependencies[] = xautoload (>= 7.x-5.0)
